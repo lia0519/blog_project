@@ -1,10 +1,10 @@
 import { NavLink, useNavigate } from "react-router";
 import { axiosInstance } from "../api/axiosInstance";
 import { useAuthStore } from "../stores/useAuthStore";
-  
+
 export default function Header() {
     const navigate = useNavigate();
-    const accessToken = useAuthStore((state) => state.accessToken);
+    const user = useAuthStore((state) => state.user);
     const unsetAuth = useAuthStore((state) => state.unsetAuth);
 
     const handleLogout = async () => {
@@ -17,31 +17,43 @@ export default function Header() {
                 throw new Error("로그아웃에 실패했습니다.");
             }
         } catch (error) {
-            alert("로그아웃 중 오류가 발생하였습니다.");
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "로그아웃 중 오류가 발생하였습니다.";
+            alert(message);
         }
     };
 
     return (
         <header className="page__header">
             <h1 className="page__logo">
-                <NavLink to="/" className="page__logo-link">JBNU</NavLink>
+                <NavLink to="/" className="page__logo-link">
+                    JBNU
+                </NavLink>
             </h1>
             <nav className="page__navigation">
                 <ul className="page__nav-list">
                     <li className="page__nav-item">
-                        <NavLink to="/write" className="page__nav-link">글쓰기</NavLink>
+                        <NavLink to="/write" className="page__nav-link">
+                            글쓰기
+                        </NavLink>
                     </li>
-                    {accessToken ? (
-                    <li className="page__nav-item">
-                        <button
-                            onClick={handleLogout}
-                            className="page__nav-link"
-                        > 로그아웃 
-                        </button>
-                    </li>
+                    {user ? (
+                        <li className="page__nav-item">
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                className="page__nav-link"
+                            >
+                                로그아웃
+                            </button>
+                        </li>
                     ) : (
                         <li className="page__nav-item">
-                            <NavLink to="/auth" className="page__nav-link">인증</NavLink>
+                            <NavLink to="/auth" className="page__nav-link">
+                                인증
+                            </NavLink>
                         </li>
                     )}
                 </ul>

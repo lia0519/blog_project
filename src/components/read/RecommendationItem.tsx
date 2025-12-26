@@ -1,29 +1,29 @@
-import { dummyImage1 } from "../../assets/images/images";
+import { NavLink } from "react-router";
 
-export default function RecommendationItem() {
+type RecommendationItemProps = {
+    id: number;
+    image: string;
+    title: string;
+    desc: string;
+};
+
+export default function RecommendationItem({
+    id,
+    image,
+    title,
+    desc,
+}: RecommendationItemProps) {
     return (
         <li>
-            <a href="">
+            <NavLink to={`/read/${id}`}>
                 <div className="page__recommend-list">
-                    <img src={dummyImage1} alt="" className="page__recommend-img" />
+                    <img src={image} alt="" className="page__recommend-img" />
                     <div>
-                        <h4 className="page__recommend-subtitle">
-                            Why you don’t need more than 3 pieces of clothing
-                        </h4>
-                        <p className="page__recommend-desc">
-                            Et vitae, mollis euismod lobortis blandit amet sed amet.
-                            Amet ut amet nisl tortor arcu non id nulla mauris neque
-                            nisl magna.Et vitae, mollis euismod lobortis blandit amet
-                            sed amet. Amet ut amet nisl tortor arcu non id nulla
-                            mauris neque nisl magna.Et vitae, mollis euismod lobortis
-                            blandit amet sed amet. Amet ut amet nisl tortor arcu non
-                            id nulla mauris neque nisl magna.Et vitae, mollis euismod
-                            lobortis blandit amet sed amet. Amet ut amet nisl tortor
-                            arcu non id nulla mauris neque nisl magna.
-                        </p>
+                        <h4 className="page__recommend-subtitle">{title}</h4>
+                        <p className="page__recommend-desc">{desc}</p>
                     </div>
                 </div>
-            </a>
+            </NavLink>
         </li>
     );
 }

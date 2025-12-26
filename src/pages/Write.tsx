@@ -6,8 +6,10 @@ export default function Write() {
                 <form action="#">
                     <div className="page__write-form">
                         <div className="page__write-group">
-                            <label htmlFor="title" className="page__write-label">제목</label
-                            ><input
+                            <label htmlFor="title" className="page__write-label">
+                                제목
+                            </label>
+                            <input
                                 type="text"
                                 name="title"
                                 id="title"
@@ -17,8 +19,14 @@ export default function Write() {
                             />
                         </div>
                         <div>
-                            <label htmlFor="category" className="page__write-label">카테고리</label>
-                            <select id="category" className="page__write-select" required>
+                            <label htmlFor="category" className="page__write-label">
+                                카테고리
+                            </label>
+                            <select
+                                id="category"
+                                className="page__write-select"
+                                required
+                            >
                                 <option value="">Select category</option>
                                 <option value="Travel">Travel</option>
                                 <option value="Food">Food</option>
@@ -26,8 +34,10 @@ export default function Write() {
                             </select>
                         </div>
                         <div>
-                            <label htmlFor="writer" className="page__write-label">작성자</label
-                            ><input
+                            <label htmlFor="writer" className="page__write-label">
+                                작성자
+                            </label>
+                            <input
                                 type="text"
                                 name="writer"
                                 id="writer"
@@ -38,11 +48,13 @@ export default function Write() {
                         </div>
                         <div className="page__write-group">
                             <div>
-                                <label htmlFor="item-weight" className="page__write-label"
-                                >썸네일</label
-                                ><label className="page__write-file--hidden" htmlFor="user_avatar"
-                                >Upload file</label
-                                ><input
+                                <label htmlFor="item-weight" className="page__write-label">
+                                    썸네일
+                                </label>
+                                <label className="page__write-file--hidden" htmlFor="user_avatar">
+                                    Upload file
+                                </label>
+                                <input
                                     className="page__write-file"
                                     aria-describedby="user_avatar_help"
                                     id="user_avatar"
@@ -53,8 +65,10 @@ export default function Write() {
                             </div>
                         </div>
                         <div className="page__write-group">
-                            <label htmlFor="description" className="page__write-label">내용</label
-                            ><textarea
+                            <label htmlFor="description" className="page__write-label">
+                                내용
+                            </label>
+                            <textarea
                                 id="description"
                                 className="page__write-textarea"
                                 placeholder="Your description here"
@@ -62,7 +76,9 @@ export default function Write() {
                             ></textarea>
                         </div>
                     </div>
-                    <button type="submit" className="page--btn">글등록</button>
+                    <button type="submit" className="page--btn">
+                        글등록
+                    </button>
                 </form>
             </div>
         </main>

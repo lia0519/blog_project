@@ -2,7 +2,7 @@ import axios from "axios";
 import {useAuthStore} from "../stores/useAuthStore"
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://113.198.66.75:18099",
     withCredentials: true,
 });
 

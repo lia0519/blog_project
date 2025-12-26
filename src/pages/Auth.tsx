@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router";
 import { axiosInstance } from "../api/axiosInstance";
+import { useAuthStore } from "../stores/useAuthStore";
 
 export default function Auth() {
     const [pageType, setPageType] = useState("login");
@@ -9,6 +10,7 @@ export default function Auth() {
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
+    const setAuth = useAuthStore((state) => state.setAuth);
 
     const handlePageChange = (type: string) => {
         setEmail("");
@@ -18,7 +20,7 @@ export default function Auth() {
         setPageType(type);
     };
 
-    const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             if (email === "" || password === "" || username === "") {
@@ -42,21 +44,29 @@ export default function Auth() {
                 setPageType("login");
             }
         } catch (error) {
-            alert("회원가입 중 오류가 발생하였습니다.")
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "회원가입 중 오류가 발생하였습니다.";
+            alert(message);
         }
     };
 
-    const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const { data } = await axiosInstance.post("/login", {
                 email,
                 password,
             });
-            console.log(data);
+            setAuth(data.user, data.accessToken);
             navigate("/");
         } catch (error) {
-            alert("로그인에 실패하였습니다.");
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "로그인에 실패하였습니다.";
+            alert(message);
         }
     };
 
@@ -79,9 +89,9 @@ export default function Auth() {
                             id="signup-tab"
                             type="button"
                             className={`page-auth__toggle-button ${
-                                pageType === "signup" && "page-auth__toggle-button--active"
+                                pageType === "register" && "page-auth__toggle-button--active"
                             }`}
-                            onClick={() => handlePageChange("signup")}
+                            onClick={() => handlePageChange("register")}
                         >
                             회원가입
                         </button>
@@ -95,7 +105,9 @@ export default function Auth() {
                             id="login-form"
                             onSubmit={handleLogin}
                         >
-                            <label htmlFor="login-email" className="a11y-hidden">이메일</label>
+                            <label htmlFor="login-email" className="a11y-hidden">
+                                이메일
+                            </label>
                             <input
                                 type="email"
                                 id="login-email"
@@ -106,7 +118,9 @@ export default function Auth() {
                                 required
                             />
 
-                            <label htmlFor="login-password" className="a11y-hidden">비밀번호</label>
+                            <label htmlFor="login-password" className="a11y-hidden">
+                                비밀번호
+                            </label>
                             <input
                                 type="password"
                                 id="login-password"
@@ -117,17 +131,21 @@ export default function Auth() {
                                 required
                             />
 
-                            <button type="submit" className="auth-form__submit">로그인</button>
+                            <button type="submit" className="auth-form__submit">
+                                로그인
+                            </button>
                         </form>
 
                         <form
                             className={`auth-form ${
-                                pageType === "signup" ? "auth-form--active" : ""
+                                pageType === "register" ? "auth-form--active" : ""
                             }`}
                             id="signup-form"
                             onSubmit={handleSignup}
                         >
-                            <label htmlFor="signup-email" className="a11y-hidden">이메일</label>
+                            <label htmlFor="signup-email" className="a11y-hidden">
+                                이메일
+                            </label>
                             <input
                                 type="email"
                                 id="signup-email"
@@ -137,7 +155,9 @@ export default function Auth() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <label htmlFor="signup-name" className="a11y-hidden">이름</label>
+                            <label htmlFor="signup-name" className="a11y-hidden">
+                                이름
+                            </label>
                             <input
                                 type="text"
                                 id="signup-name"
@@ -147,7 +167,9 @@ export default function Auth() {
                                 onChange={(e) => setUsername(e.target.value)}
                                 required
                             />
-                            <label htmlFor="signup-password" className="a11y-hidden">비밀번호</label>
+                            <label htmlFor="signup-password" className="a11y-hidden">
+                                비밀번호
+                            </label>
                             <input
                                 type="password"
                                 id="signup-password"
@@ -158,7 +180,12 @@ export default function Auth() {
                                 required
                             />
 
-                            <label htmlFor="signup-confirm-password" className="a11y-hidden">비밀번호 확인</label>
+                            <label
+                                htmlFor="signup-confirm-password"
+                                className="a11y-hidden"
+                            >
+                                비밀번호 확인
+                            </label>
                             <input
                                 type="password"
                                 id="signup-confirm-password"
